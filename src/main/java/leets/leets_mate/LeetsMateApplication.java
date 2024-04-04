@@ -6,6 +6,7 @@ public class LeetsMateApplication {
 
     // 동작 함수입니다.
     public void run() {
+        System.out.println("Hello World!");
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.

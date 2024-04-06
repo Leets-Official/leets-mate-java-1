@@ -1,4 +1,4 @@
-package leets.leets_mate;
+package leets.leets_mate.domain;
 
 public class Name {
 

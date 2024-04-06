@@ -1,4 +1,4 @@
-package leets.leets_mate;
+package leets.leets_mate.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

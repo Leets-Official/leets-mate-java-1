@@ -1,6 +1,7 @@
 package leets.leets_mate.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Names {
 
@@ -12,5 +13,24 @@ public class Names {
 
     public int countNames() {
         return names.size();
+    }
+
+    public List<Name> findByIndexes(List<Integer> indexes) {
+        return indexes.stream()
+                .map(names::get)
+                .toList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Names names = (Names) o;
+        return Objects.equals(this.names, names.names);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(names);
     }
 }

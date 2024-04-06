@@ -5,7 +5,8 @@ import java.util.*;
 public class LeetsMateApplication {
 
     static String members;
-    static int row;
+    static List<String> memberList;
+    static int row, column;
 
     // 동작 함수입니다.
     public void run() throws Exception {
@@ -19,20 +20,20 @@ public class LeetsMateApplication {
         checkHasNoEnglish(members);
 
         System.out.println("\n최대 짝 수를 입력해 주세요.");
-        int maximumGroupSize = sc.nextInt();
+        column = sc.nextInt();
 
-        List<String> memberList = parseMembers(members);
+        memberList = parseMembers(members);
 
-        checkDataValidity(memberNumber(memberList), maximumGroupSize);
+        checkDataValidity(memberNumber(memberList), column);
 
-        printResult(generateRandomGroups(memberList, maximumGroupSize));
+        printResult(generateRandomGroups(memberList, column));
 
         while (true) {
             System.out.print("다시 구성하시겠습니까? (y or n): ");
             String answer = sc.next();
 
             if (answer.equals("y")) {
-                printResult(generateRandomGroups(memberList, maximumGroupSize));
+                printResult(generateRandomGroups(memberList, column));
             } else {
                 System.out.println("자리를 이동해 서로에게 인사해주세요.");
                 break;
@@ -72,10 +73,10 @@ public class LeetsMateApplication {
 
         List<List<String>> result = new ArrayList<>();
 
-        if (memberList.size() % maximumGroupSize != 0) {
-            row = memberList.size() / maximumGroupSize + 1;
+        if (memberNumber(memberList) % maximumGroupSize != 0) {
+            row = memberNumber(memberList) / maximumGroupSize + 1;
         } else {
-            row = memberList.size() / maximumGroupSize;
+            row = memberNumber(memberList) / maximumGroupSize;
         }
 
         for (int i = 0; i < row; i++) {
@@ -84,7 +85,7 @@ public class LeetsMateApplication {
 
         for (int i = 0; i < row; i++) {
             for (int j = i * maximumGroupSize; j < maximumGroupSize * (i + 1); j++) {
-                if (j < memberList.size()) {
+                if (j < memberNumber(memberList)) {
                     result.get(i).add(memberList.get(j));
                 }
             }
@@ -98,18 +99,16 @@ public class LeetsMateApplication {
 
         StringBuilder sb = new StringBuilder();
 
-        int column = result.get(0).size();
-
         for (int i = 0; i < row; i++) {
             sb.append("[ ");
             for (int j = 0; j < column; j++) {
                 sb.append(result.get(i).get(j));
 
-                if (i == row - 1 && j == members.length() % column) {
+                if (i == row - 1 && j == memberNumber(memberList) % column - 1) {
                     break;
                 }
 
-                if (j + 1 != column) {
+                if (j < column - 1) {
                     sb.append(" | ");
                 }
             }

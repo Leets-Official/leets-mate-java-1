@@ -43,9 +43,7 @@ public class LeetsMateApplication {
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
     public List<String> parseMembers(String members) {
-        List<String> memberList = Arrays.stream(members.split(",")).toList();
-        // toList를 하게 되면 변경할 수 없는 리스트가 되기 때문에 다시 변경 가능한 리스트로 변환한다.
-        return new ArrayList<>(memberList);
+        return Arrays.asList(members.split(","));
     }
 
     // 총 멤버수를 반환합니다.

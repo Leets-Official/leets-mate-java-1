@@ -34,7 +34,7 @@ class LeetsMateApplicationTests {
 
     @Test
     void 멤버수와_최대_멤버수를_잘못_입력한_경우_예외를_반환한다() {
-        Exception e = assertThrows(Exception.class, () -> {
+        RuntimeException e = assertThrows(RuntimeException.class, () -> {
             app.checkDataValidity(3, 4);
         });
         assertThat("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다.").isEqualTo(e.getMessage());

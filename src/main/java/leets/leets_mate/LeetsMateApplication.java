@@ -31,6 +31,7 @@ public class LeetsMateApplication {
 
         parsedMembers = parseMembers(members);
         groupSize = getGroupSize();
+        List<List<String>> finalMembers = generateRandomGroups(parsedMembers, groupSize);
     }
 
     private int getGroupSize() throws IOException {
@@ -89,7 +90,15 @@ public class LeetsMateApplication {
 
     // 랜덤 짝꿍 추첨하는 함수 입니다.
     public List<List<String>> generateRandomGroups(List<String> memberList, int maximumGroupSize) {
-        return new ArrayList<>();
+        Collections.shuffle(memberList);
+
+        List<List<String>> groups = new ArrayList<>();
+        for (int i = 0; i < memberList.size(); i += maximumGroupSize) {
+            int end = Math.min(i + maximumGroupSize, memberList.size());
+            groups.add(new ArrayList<>(memberList.subList(i, end)));
+        }
+
+        return groups;
     }
 
     // 결과를 프린트 하는 함수입니다.

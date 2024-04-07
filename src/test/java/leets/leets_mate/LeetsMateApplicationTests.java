@@ -47,4 +47,12 @@ class LeetsMateApplicationTests {
         });
         assertThat("[ERROR] 이름은 한글로 입력해야 합니다.").isEqualTo(e.getMessage());
     }
+
+    @Test
+    void 다시추첨에서_잘못_입력한_경우_예외를_반환한다(){
+        InputMismatchException e = assertThrows(InputMismatchException.class, () -> {
+            app.checkYesOrNo("a");
+        });
+        assertThat("[ERROR] 입력에는 'y','n'만 가능합니다.").isEqualTo(e.getMessage());
+    }
 }

@@ -19,6 +19,10 @@ public class Name {
         }
     }
 
+    public String asString() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

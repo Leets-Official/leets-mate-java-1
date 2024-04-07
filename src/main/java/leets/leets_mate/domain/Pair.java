@@ -11,6 +11,10 @@ public class Pair {
         this.names = new Names(names);
     }
 
+    public List<String> names() {
+        return names.names();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

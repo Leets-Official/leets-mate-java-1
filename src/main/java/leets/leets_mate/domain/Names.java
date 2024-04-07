@@ -33,4 +33,10 @@ public class Names {
     public int hashCode() {
         return Objects.hash(names);
     }
+
+    public List<String> names() {
+        return names.stream()
+                .map(Name::asString)
+                .toList();
+    }
 }

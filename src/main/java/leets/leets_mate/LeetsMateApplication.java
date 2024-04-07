@@ -10,10 +10,11 @@ import java.util.regex.Pattern;
 import static leets.leets_mate.Constants.*;
 
 public class LeetsMateApplication {
+    static BufferedReader br;
 
     // 동작 함수입니다.
     public void run() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(INTRO.getMessage());
         System.out.print(NEWLINE.getMessage());
         System.out.println(INPUT.getMessage());
@@ -27,6 +28,20 @@ public class LeetsMateApplication {
         }
 
         List<String> parsedMembers = parseMembers(members);
+        checkDataValidity(memberNumber(parsedMembers), checkGroupSize());
+    }
+
+    private int checkGroupSize() throws IOException {
+        int size = 0;
+
+        try {
+            size = Integer.parseInt(br.readLine());
+        } catch (NumberFormatException e) {
+            System.out.printf(ERROR_INPUT.getMessage());
+            checkGroupSize();
+        }
+
+        return size;
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
@@ -37,7 +52,7 @@ public class LeetsMateApplication {
 
     // 총 멤버수를 반환합니다.
     public int memberNumber(List<String> members) {
-        return 0;
+        return members.size();
     }
 
     // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력

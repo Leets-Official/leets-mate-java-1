@@ -8,6 +8,7 @@ public class InputView {
 
     public static final String COMMA = ",";
     public static final Pattern FORMAT = Pattern.compile("^[ㄱ-힇]*$");
+    public static final String ERROR_FORMAT = "[ERROR] %s";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -28,7 +29,7 @@ public class InputView {
 
     private void validateInput(String rawName) {
         if (!FORMAT.matcher(rawName).matches()) {
-            throw new IllegalArgumentException("한글만 입력해 주세요");
+            throw new IllegalArgumentException(String.format(ERROR_FORMAT, "한글만 입력해 주세요."));
         }
     }
 
@@ -38,9 +39,18 @@ public class InputView {
 
         String input = scanner.nextLine();
         try {
+            return parseToInt(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readPairCount();
+        }
+    }
+
+    private int parseToInt(String input) {
+        try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("숫자를 입력해 주세요");
+            throw new IllegalArgumentException(String.format(ERROR_FORMAT, "숫자를 입력해 주세요."));
         }
     }
 }

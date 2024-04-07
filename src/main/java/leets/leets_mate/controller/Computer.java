@@ -14,7 +14,7 @@ public class Computer {
     public void run() {
         outputView.printStartNotice();
         Names names = readNames();
-        int pairCount = readPairCount();
+        PairCount pairCount = readPairCount(names.countNames());
 
         PairMatcher pairMatcher = new PairMatcher(pairCount, new RandomNumbersGenerator());
 
@@ -31,7 +31,9 @@ public class Computer {
         return new Names(names);
     }
 
-    private int readPairCount() {
-        return inputView.readPairCount();
+    private PairCount readPairCount(int namesCount) {
+        int pairCount = inputView.readPairCount();
+        new PairCountValidator().validate(pairCount, namesCount);
+        return new PairCount(pairCount);
     }
 }

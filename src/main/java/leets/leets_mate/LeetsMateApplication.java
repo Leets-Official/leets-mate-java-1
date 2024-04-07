@@ -49,6 +49,7 @@ public class LeetsMateApplication {
         String input = br.readLine();
 
         if (input.equals("y")) {
+            System.out.println("--------------------------------");
             getResult();
         } else if (!input.equals("n")) {
             throw new IllegalArgumentException();
@@ -72,7 +73,7 @@ public class LeetsMateApplication {
         int size = checkGroupSize(); // Must be even
 
         try {
-            checkDataValidity(parsedMembers.size(), size);
+            checkDataValidity(memberNumber(parsedMembers), size);
         } catch (IllegalArgumentException e) {
             System.out.println(ERROR_MAXSIZE.getMessage());
             size = getGroupSize();
@@ -95,6 +96,10 @@ public class LeetsMateApplication {
 
     public List<String> parseMembers(String members) {
         return Arrays.stream(members.split(",")).collect(Collectors.toList());
+    }
+
+    public int memberNumber(List<String> members) {
+        return members.size();
     }
 
     public void checkHasNoEnglish(String members) {

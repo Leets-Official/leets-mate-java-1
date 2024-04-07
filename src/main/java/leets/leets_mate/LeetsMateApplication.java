@@ -11,6 +11,8 @@ import static leets.leets_mate.Constants.*;
 
 public class LeetsMateApplication {
     static BufferedReader br;
+    static List<String> parsedMembers;
+    static int groupSize;
 
     // 동작 함수입니다.
     public void run() throws IOException {
@@ -27,8 +29,20 @@ public class LeetsMateApplication {
             run();
         }
 
-        List<String> parsedMembers = parseMembers(members);
-        checkDataValidity(memberNumber(parsedMembers), checkGroupSize());
+        parsedMembers = parseMembers(members);
+        groupSize = getGroupSize();
+    }
+
+    private int getGroupSize() throws IOException {
+        int size = checkGroupSize();
+
+        try {
+            checkDataValidity(memberNumber(parsedMembers), size);
+        } catch (Exception e) {
+            System.out.println(ERROR_INPUT.getMessage());
+            getGroupSize();
+        }
+        return size;
     }
 
     private int checkGroupSize() throws IOException {
@@ -68,6 +82,9 @@ public class LeetsMateApplication {
 
     // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
     public void checkDataValidity(int memberCount, int maximumGroupSize) {
+        if (memberCount > maximumGroupSize) {
+            throw new IllegalArgumentException();
+        }
     }
 
     // 랜덤 짝꿍 추첨하는 함수 입니다.

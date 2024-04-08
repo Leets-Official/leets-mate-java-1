@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class InputView {
 
     public static final String COMMA = ",";
-    public static final Pattern NAME_FORMAT = Pattern.compile("^[ㄱ-힇]*$");
+    public static final Pattern NAME_FORMAT = Pattern.compile("^[ㄱ-ㅎ|가-힣]+$");
     public static final Pattern RETRY_FORMAT = Pattern.compile("^[y|n]$");
     public static final String ERROR_FORMAT = "[ERROR] %s";
 

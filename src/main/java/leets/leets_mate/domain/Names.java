@@ -21,6 +21,10 @@ public class Names {
                 .toList();
     }
 
+    public List<Name> findByIndexes(RandomNumbers randomNumbers) {
+        return randomNumbers.findNames(names);
+    }
+
     public List<String> names() {
         return names.stream()
                 .map(Name::asString)

@@ -28,11 +28,10 @@ class PairMatcherTest {
     @DisplayName("나머지 없이 랜덤으로 짝을 매치한다.")
     void pairMatcher_Multiple() {
         PairMatcher pairMatcher = new PairMatcher(new PairCount(2), new RandomNumbersGenerator() {
+
             @Override
-            public List<List<Integer>> randomNumbers(int bound, int size) {
-                return List.of(
-                        List.of(0, 3),
-                        List.of(1, 2));
+            public RandomNumbers randomNumbers(int bound) {
+                return new RandomNumbers(List.of(0, 3, 1, 2));
             }
         });
 
@@ -48,12 +47,10 @@ class PairMatcherTest {
     @DisplayName("나머지가 있어도 랜덤으로 짝을 매치한다.")
     void pairMatcher_overNamesCount_ExceptionThrown() {
         PairMatcher pairMatcher = new PairMatcher(new PairCount(3), new RandomNumbersGenerator() {
+
             @Override
-            public List<List<Integer>> randomNumbers(int bound, int size) {
-                return List.of(
-                        List.of(0, 3, 1),
-                        List.of(2)
-                );
+            public RandomNumbers randomNumbers(int bound) {
+                return new RandomNumbers(List.of(0, 3, 1, 2));
             }
         });
 

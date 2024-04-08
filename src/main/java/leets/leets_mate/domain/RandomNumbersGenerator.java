@@ -7,17 +7,11 @@ import java.util.stream.IntStream;
 
 public class RandomNumbersGenerator {
 
-    public List<List<Integer>> randomNumbers(int bound, int size) {
-        List<Integer> integers = new ArrayList<>(IntStream.range(0, bound)
+    public RandomNumbers randomNumbers(int bound) {
+        List<Integer> randomNumbers = new ArrayList<>(IntStream.range(0, bound)
                 .boxed()
                 .toList());
-        Collections.shuffle(integers);
-
-        List<List<Integer>> randomIndexes = new ArrayList<>();
-        for (int index = 0; index < bound; index += size) {
-            int end = Math.min(index + size, bound);
-            randomIndexes.add(integers.subList(index, end));
-        }
-        return randomIndexes;
+        Collections.shuffle(randomNumbers);
+        return new RandomNumbers(randomNumbers);
     }
 }

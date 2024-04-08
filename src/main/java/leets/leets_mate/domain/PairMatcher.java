@@ -13,8 +13,9 @@ public class PairMatcher {
     }
 
     public List<Pair> match(Names names) {
-        List<List<Integer>> randomNumbers = randomNumbersGenerator.randomNumbers(names.countNames(), pairCount.value());
-        return randomNumbers.stream()
+        RandomNumbers randomNumbers = randomNumbersGenerator.randomNumbers(names.countNames());
+        List<RandomNumbers> splitRandomNumbers = randomNumbers.splitBySize(pairCount.value());
+        return splitRandomNumbers.stream()
                 .map(names::findByIndexes)
                 .map(Pair::new)
                 .toList();

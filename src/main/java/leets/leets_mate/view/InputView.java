@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 public class InputView {
 
     public static final String COMMA = ",";
-    public static final Pattern FORMAT = Pattern.compile("^[ㄱ-힇]*$");
+    public static final Pattern NAME_FORMAT = Pattern.compile("^[ㄱ-힇]*$");
+    public static final Pattern RETRY_FORMAT = Pattern.compile("^[y|n]$");
     public static final String ERROR_FORMAT = "[ERROR] %s";
 
     private final Scanner scanner = new Scanner(System.in);
@@ -28,7 +29,7 @@ public class InputView {
     }
 
     private void validateInput(String rawName) {
-        if (!FORMAT.matcher(rawName).matches()) {
+        if (!NAME_FORMAT.matcher(rawName).matches()) {
             throw new IllegalArgumentException(String.format(ERROR_FORMAT, "한글만 입력해 주세요."));
         }
     }
@@ -51,6 +52,25 @@ public class InputView {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(String.format(ERROR_FORMAT, "숫자를 입력해 주세요."));
+        }
+    }
+
+    public String readRetry() {
+        System.out.print("다시 구성하시겠습니까? (y or n): ");
+
+        String input = scanner.nextLine();
+        try {
+            validate(input);
+            return input;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readRetry();
+        }
+    }
+
+    private void validate(String input) {
+        if (!RETRY_FORMAT.matcher(input).matches()) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
 }

@@ -5,10 +5,20 @@ import java.util.Objects;
 
 public class Names {
 
+    private static final int MIN_SIZE = 2;
+    private static final String ERROR_FORMAT = "[ERROR] 이름은 %d개 이상이어야 합니다.";
+
     private final List<Name> names;
 
     public Names(List<Name> names) {
+        validate(names);
         this.names = names;
+    }
+
+    private void validate(List<Name> names) {
+        if (names.size() < MIN_SIZE) {
+            throw new IllegalArgumentException(String.format(ERROR_FORMAT, MIN_SIZE));
+        }
     }
 
     public int countNames() {

@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Name {
 
-    private static final String ERROR_FORMAT = "[ERROR] 이름은 %d자 이하여야 합니다.";
     private static final int MAX_LENGTH = 5;
+    private static final String ERROR_FORMAT = "[ERROR] 이름은 %d자 이하여야 합니다.";
 
     private final String name;
 

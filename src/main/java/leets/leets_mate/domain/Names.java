@@ -21,6 +21,12 @@ public class Names {
                 .toList();
     }
 
+    public List<String> names() {
+        return names.stream()
+                .map(Name::asString)
+                .toList();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,11 +38,5 @@ public class Names {
     @Override
     public int hashCode() {
         return Objects.hash(names);
-    }
-
-    public List<String> names() {
-        return names.stream()
-                .map(Name::asString)
-                .toList();
     }
 }

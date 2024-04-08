@@ -1,6 +1,5 @@
 package leets.leets_mate.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PairMatcher {
@@ -15,13 +14,9 @@ public class PairMatcher {
 
     public List<Pair> match(Names names) {
         List<List<Integer>> randomNumbers = randomNumbersGenerator.randomNumbers(names.countNames(), pairCount.value());
-
-        List<Pair> pairs = new ArrayList<>();
-        for (List<Integer> randomNumber : randomNumbers) {
-            List<Name> pairNames = names.findByIndexes(randomNumber);
-            Pair pair = new Pair(pairNames);
-            pairs.add(pair);
-        }
-        return pairs;
+        return randomNumbers.stream()
+                .map(names::findByIndexes)
+                .map(Pair::new)
+                .toList();
     }
 }

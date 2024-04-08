@@ -7,7 +7,6 @@ public class OutputView {
 
     public void printStartNotice() {
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.");
-        System.out.println();
     }
 
     public void printPairMatchResultNotice() {
@@ -26,5 +25,9 @@ public class OutputView {
     public void printPairMatchFinishNotice() {
         System.out.println();
         System.out.println("추천을 완료했습니다.");
+    }
+
+    public void printBreakLine() {
+        System.out.println("--------------------------------");
     }
 }

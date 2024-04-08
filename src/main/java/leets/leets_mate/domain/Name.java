@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Name {
 
+    private static final String ERROR_FORMAT = "[ERROR] 이름은 %d자 이하여야 합니다.";
     private static final int MAX_LENGTH = 5;
 
     private final String name;
@@ -15,7 +16,7 @@ public class Name {
 
     private void validate(String name) {
         if (name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("이름은 5자 이하여야 합니다.");
+            throw new IllegalArgumentException(String.format(ERROR_FORMAT, MAX_LENGTH));
         }
     }
 

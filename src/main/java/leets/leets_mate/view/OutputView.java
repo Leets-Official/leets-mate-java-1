@@ -10,7 +10,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printPairMatchNotice() {
+    public void printPairMatchResultNotice() {
         System.out.println();
         System.out.println("오늘의 짝 추천 결과입니다.");
     }
@@ -21,5 +21,10 @@ public class OutputView {
             stringJoiner.add(pair);
         }
         System.out.println(stringJoiner);
+    }
+
+    public void printPairMatchFinishNotice() {
+        System.out.println();
+        System.out.println("추천을 완료했습니다.");
     }
 }

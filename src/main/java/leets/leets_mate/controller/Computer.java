@@ -17,10 +17,11 @@ public class Computer {
         PairCount pairCount = readPairCount(names.countNames());
 
         PairMatcher pairMatcher = new PairMatcher(pairCount, new RandomNumbersGenerator());
-
         List<Pair> pairs = pairMatcher.match(names);
-        outputView.printPairMatchNotice();
+
+        outputView.printPairMatchResultNotice();
         pairs.forEach(pair -> outputView.printPairMatchResult(pair.names()));
+        outputView.printPairMatchFinishNotice();
     }
 
     private Names readNames() {

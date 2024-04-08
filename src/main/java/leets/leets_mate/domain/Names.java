@@ -35,12 +35,6 @@ public class Names {
         return randomNumbers.findNames(names);
     }
 
-    public List<String> names() {
-        return names.stream()
-                .map(Name::asString)
-                .toList();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

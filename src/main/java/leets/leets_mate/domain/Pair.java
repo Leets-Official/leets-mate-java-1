@@ -5,14 +5,16 @@ import java.util.Objects;
 
 public class Pair {
 
-    private final Names names;
+    private final List<Name> names;
 
     public Pair(List<Name> names) {
-        this.names = new Names(names);
+        this.names = names;
     }
 
     public List<String> names() {
-        return names.names();
+        return names.stream()
+                .map(Name::asString)
+                .toList();
     }
 
     @Override

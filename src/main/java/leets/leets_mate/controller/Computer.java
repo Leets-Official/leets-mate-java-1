@@ -40,10 +40,15 @@ public class Computer {
 
     private Names readNames() {
         List<String> rawNames = inputView.readNames();
-        List<Name> names = rawNames.stream()
-                .map(Name::new)
-                .toList();
-        return new Names(names);
+        try {
+            List<Name> names = rawNames.stream()
+                    .map(Name::new)
+                    .toList();
+            return new Names(names);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return readNames();
+        }
     }
 
     private PairCount readPairCount(int namesCount) {

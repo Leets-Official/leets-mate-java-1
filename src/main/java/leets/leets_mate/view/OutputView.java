@@ -34,4 +34,8 @@ public class OutputView {
     public void printEndNotice() {
         System.out.println("자리를 이동해 서로에게 인사해주세요.");
     }
+
+    public void printError(String message) {
+        System.out.println(message);
+    }
 }

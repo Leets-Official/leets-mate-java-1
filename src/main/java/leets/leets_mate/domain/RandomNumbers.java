@@ -1,7 +1,7 @@
 package leets.leets_mate.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class RandomNumbers {
 
@@ -13,13 +13,10 @@ public class RandomNumbers {
 
     public List<RandomNumbers> splitBySize(int size) {
         int length = values.size();
-        List<RandomNumbers> randomIndexes = new ArrayList<>();
-        for (int index = 0; index < length; index += size) {
-            int end = Math.min(index + size, length);
-            List<Integer> randomNumbers = values.subList(index, end);
-            randomIndexes.add(new RandomNumbers(randomNumbers));
-        }
-        return randomIndexes;
+        return IntStream.iterate(0, i -> i < length, i -> i + size)
+                .mapToObj(i -> values.subList(i, Math.min(i + size, length)))
+                .map(RandomNumbers::new)
+                .toList();
     }
 
     public List<Name> findNames(List<Name> names) {

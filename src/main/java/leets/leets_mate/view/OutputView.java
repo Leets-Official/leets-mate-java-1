@@ -30,4 +30,8 @@ public class OutputView {
     public void printBreakLine() {
         System.out.println("--------------------------------");
     }
+
+    public void printEndNotice() {
+        System.out.println("자리를 이동해 서로에게 인사해주세요.");
+    }
 }

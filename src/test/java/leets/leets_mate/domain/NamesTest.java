@@ -23,6 +23,7 @@ class NamesTest {
     }
 
     @Test
+    @DisplayName("해당 위치에 존재하는 이름을 반환한다.")
     void findByIndexes() {
         List<Name> namesByIndexes = names.findByIndexes(List.of(1, 3));
 

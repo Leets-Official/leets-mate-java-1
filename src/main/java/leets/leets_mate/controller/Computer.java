@@ -48,8 +48,13 @@ public class Computer {
 
     private PairCount readPairCount(int namesCount) {
         int pairCount = inputView.readPairCount();
-        new PairCountValidator().validate(pairCount, namesCount);
-        return new PairCount(pairCount);
+        try {
+            new PairCountValidator().validate(pairCount, namesCount);
+            return new PairCount(pairCount);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readPairCount(namesCount);
+        }
     }
 
     private RetryOpinion readRetry() {

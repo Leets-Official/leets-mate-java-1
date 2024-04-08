@@ -45,24 +45,9 @@ public class LeetsMateApplication {
             int size = Integer.parseInt(br.readLine());
             checkDataValidity(memberNumber(memberList), size);
 
-            boolean isFixed = false;
-            while (!isFixed) {
-                System.out.println("\n오늘의 짝 추천 결과입니다.");
-
-                // 3. 짝 추첨 -> 출력
-                List<List<String>> result = generateRandomGroups(memberList, size);
-                printResult(result);
-
-                System.out.print("""
-                 추천을 완료했습니다.
-                 다시 구성하시겠습니까? (y or n):\s""");
-                isFixed = br.readLine().matches("n");   // n == true
-                if (!isFixed) {
-                    System.out.println("--------------------------------");
-                }
-            }
+            // 3. 짝 추첨 -> 출력
+            repeat(memberList, size);
             System.out.println("자리를 이동해 서로에게 인사해주세요.");
-
         } catch (Exception e) {
             e.printStackTrace();    // 에러 추적
         }
@@ -128,6 +113,29 @@ public class LeetsMateApplication {
         }
         System.out.println(sb);
     }
+
+    public void repeat(List<String> memberList, int size) throws InvalidInputException {
+        Scanner sc = new Scanner(System.in);
+        boolean isFixed = false;
+        while (!isFixed) {
+            System.out.println("\n오늘의 짝 추천 결과입니다.");
+
+            List<List<String>> result = generateRandomGroups(memberList, size); // 짝 추첨
+            printResult(result);    // 출력
+
+            System.out.print("""
+                 추천을 완료했습니다.
+                 다시 구성하시겠습니까? (y or n):\s""");
+            String input = sc.next();   // n == true
+            if (input.equals("y")) {
+                System.out.println("--------------------------------");
+            } else if (input.equals("n")) {
+                isFixed = true;
+            } else {    // 그 외의 잘못된 응답 처리
+                throw new InvalidInputException("[ERROR] 응답은 y 혹은 n으로 입력해야 합니다.");
+            }
+        }
+    }
 }
 
 /**
@@ -140,17 +148,17 @@ public class LeetsMateApplication {
  * - 추가 가공이 필요함
  * - 데이터 타입 변환 작업 필요
  * - 데이터를 버퍼에 담아두다가 입력이 끝나면 한 번에 사용자에게 전달 -> 빠름
- * <p>
+ *
  * 문제 조건에선 String으로 값을 한 번에 받고, 가공하는 작업을 parseMember 메서드에서 진행하게 돼있으므로
  * 입력 값의 길이가 길수록 유리한 BufferedReader 선택
- * <p>
- * <p>
+ *
+ *
  * #2
  * String
  * - String 객체 값은 불변
  * StringBuffer/StringBuilder
  * - 객체의 공간이 부족할 경우 버퍼의 크기를 유연하게 늘려주어 가변적 -> 문자열의 CUD가 빈번하다면 String보다 유리
- * <p>
+ *
  * 하지만 String의 + 연산자의 내부 구조는 StringBuilder 객체가 생성되고 연산을 하므로 합치는 연산은 String과 StringBuilder의 차이가 없다
  * 그러나 연산이 빈번히 발생할 경우 StringBuilder의 객체가 빈번히 생성-삭제를 해야하므로 메모리 측면에서 불리하다
  * 따라서 연산이 빈번할 경우엔 StringBuffer/StringBuilder를 사용하는 것이 좋다

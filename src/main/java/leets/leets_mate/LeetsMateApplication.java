@@ -8,6 +8,7 @@ public class LeetsMateApplication {
 
     // 동작 함수입니다.
     public void run() {
+        
         //입력부
         Scanner scan = new Scanner(System.in);
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.");
@@ -17,17 +18,17 @@ public class LeetsMateApplication {
         //영어 입력시 예외처리
         members = inputMembers(members, scan);
 
+        //문자열에서 List로 변환
+        List<String> memberList = parseMembers(members);
+
         //최대 짝 수 입력, 잘못된 입력 시 예외처리
         System.out.println();
         System.out.println("최대 짝 수를 입력해주세요.");
         int maxGroup;
         maxGroup = getMaxGroup(scan);
 
-        //문자열에서 List로 변환
-        List<String> memberList = parseMembers(members);
-
         //최대 짝 수가 입력된 이름 수보다 크면 예외처리
-        maxGroup = getMaxGroup(memberList, maxGroup, scan);
+        maxGroup = checkMaxGroup(memberList, maxGroup, scan);
 
         //버퍼 속 개행문자 소비
         scan.nextLine();
@@ -59,7 +60,7 @@ public class LeetsMateApplication {
     }
 
     //최대 짝 수 크기 예외 처리
-    private int getMaxGroup(List<String> memberList, int maxGroup, Scanner scan) {
+    private int checkMaxGroup(List<String> memberList, int maxGroup, Scanner scan) {
         while(true) {
             try {
                 checkDataValidity(memberNumber(memberList), maxGroup);

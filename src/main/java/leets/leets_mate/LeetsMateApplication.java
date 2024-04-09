@@ -5,6 +5,8 @@ import java.util.*;
 public class LeetsMateApplication {
     static String members;
     static List<String> memberList;
+    static int maximumGroupSize;
+    static int memberCount;
 
     // 동작 함수입니다.
     public void run() throws Exception {
@@ -18,8 +20,10 @@ public class LeetsMateApplication {
         memberList = parseMembers(members);
         System.out.println();
         System.out.println("최대 짝 수를 입력해 주세요.");
-        int maximumGroupSize = sc.nextInt();
-        int memberCount = memberList.size();
+
+
+        maximumGroupSize = sc.nextInt();
+        memberCount = memberNumber(memberList);
 
         checkDataValidity(memberCount, maximumGroupSize);
 
@@ -38,7 +42,7 @@ public class LeetsMateApplication {
 
     // 총 멤버수를 반환합니다.
     public int memberNumber(List<String> members) {
-        return 0;
+        return members.size();
     }
 
     // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력

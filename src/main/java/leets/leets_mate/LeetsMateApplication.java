@@ -15,13 +15,16 @@ public class LeetsMateApplication {
         members = sc.nextLine();
 
         checkHasNoEnglish(members);
-
-        System.out.println();
-
-        System.out.println("최대 짝 수를 입력해 주세요.");
-        int max = sc.nextInt();
-
         memberList = parseMembers(members);
+        System.out.println();
+        System.out.println("최대 짝 수를 입력해 주세요.");
+        int maximumGroupSize = sc.nextInt();
+        int memberCount = memberList.size();
+
+        checkDataValidity(memberCount, maximumGroupSize);
+
+        generateRandomGroups(memberList, maximumGroupSize);
+
 
         System.out.println("오늘의 짝 추천 결과입니다.\n");
 
@@ -46,7 +49,10 @@ public class LeetsMateApplication {
     }
 
     // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
-    public void checkDataValidity(int memberCount, int maximumGroupSize) {
+    public void checkDataValidity(int memberCount, int maximumGroupSize) throws Exception {
+        if(maximumGroupSize>memberCount){
+            throw new Exception("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다");
+        }
     }
 
     // 랜덤 짝꿍 추첨하는 함수 입니다.

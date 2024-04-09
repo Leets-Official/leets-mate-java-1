@@ -15,49 +15,30 @@ public class LeetsMateApplication {
         String members = scan.nextLine();
 
         //영어 입력시 예외처리
-        while(true) {
-            try {
-                checkHasNoEnglish(members);
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("멤버의 이름을 한글로 다시 입력해 주세요. ',' 로 구분");
-                members = scan.nextLine();
-            }
-        }
+        members = inputMembers(members, scan);
 
         //최대 짝 수 입력, 잘못된 입력 시 예외처리
         System.out.println();
         System.out.println("최대 짝 수를 입력해주세요.");
         int maxGroup;
-        while(true) {
-            try {
-                maxGroup = scan.nextInt();
-                break;
-            }catch (InputMismatchException e){
-                System.out.println("최대 짝 수를 다시 입력해주세요");
-                scan.next();
-            }
-        }
+        maxGroup = getMaxGroup(scan);
 
         //문자열에서 List로 변환
         List<String> memberList = parseMembers(members);
 
         //최대 짝 수가 입력된 이름 수보다 크면 예외처리
-        while(true) {
-            try {
-                checkDataValidity(memberNumber(memberList), maxGroup);
-                break;
-            } catch (RuntimeException e) {
-                System.out.println("최대 짝 수를 다시 입력해주세요");
-                maxGroup = scan.nextInt();
-            }
-        }
+        maxGroup = getMaxGroup(memberList, maxGroup, scan);
 
         //버퍼 속 개행문자 소비
         scan.nextLine();
 
-        String index;
         //다시추첨기능, y나n을 입력하지 않으면 예외처리
+        reDraw(memberList, maxGroup, scan);
+    }
+
+    //다시 추첨 기능 + 예외처리
+    private void reDraw(List<String> memberList, int maxGroup, Scanner scan) {
+        String index;
         while(true){
             printResult(generateRandomGroups(memberList, maxGroup));
             System.out.println("다시 추첨하겠습니까?");
@@ -75,6 +56,49 @@ public class LeetsMateApplication {
                 break;
             }
         }
+    }
+
+    //최대 짝 수 크기 예외 처리
+    private int getMaxGroup(List<String> memberList, int maxGroup, Scanner scan) {
+        while(true) {
+            try {
+                checkDataValidity(memberNumber(memberList), maxGroup);
+                break;
+            } catch (RuntimeException e) {
+                System.out.println("최대 짝 수를 다시 입력해주세요");
+                maxGroup = scan.nextInt();
+            }
+        }
+        return maxGroup;
+    }
+
+    //최대 짝 수 입력 예외 처리
+    private static int getMaxGroup(Scanner scan) {
+        int maxGroup;
+        while(true) {
+            try {
+                maxGroup = scan.nextInt();
+                break;
+            }catch (InputMismatchException e){
+                System.out.println("최대 짝 수를 다시 입력해주세요");
+                scan.next();
+            }
+        }
+        return maxGroup;
+    }
+
+    //멤버 입력 예외처리
+    private String inputMembers(String members, Scanner scan) {
+        while(true) {
+            try {
+                checkHasNoEnglish(members);
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("멤버의 이름을 한글로 다시 입력해 주세요. ',' 로 구분");
+                members = scan.nextLine();
+            }
+        }
+        return members;
     }
 
 

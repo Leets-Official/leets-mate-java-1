@@ -11,13 +11,13 @@ import java.util.stream.IntStream;
 
 public class LeetsMateApplication {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         LeetsMateApplication app = new LeetsMateApplication();
         app.run();
     }
 
     // 동작 함수입니다.
-    public void run() throws IOException {
+    public void run() {
         /** 설계
          *  1. 이름 입력 받기
          *      a. String -> List (parseMember)
@@ -45,7 +45,7 @@ public class LeetsMateApplication {
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
-    public List<String> parseMembers(String members) throws IOException {
+    public List<String> parseMembers(String members) {
         try {
             return Arrays.stream(members.split(","))
                     .peek(this::checkHasNoEnglish)  // validation
@@ -104,7 +104,7 @@ public class LeetsMateApplication {
         System.out.println(sb);
     }
 
-    public void repeat(List<String> memberList, int size) throws InvalidInputException, IOException {
+    public void repeat(List<String> memberList, int size) throws InvalidInputException {
         boolean isFixed = false;
         while (!isFixed) {
             System.out.println("\n오늘의 짝 추천 결과입니다.");
@@ -117,7 +117,7 @@ public class LeetsMateApplication {
         }
     }
 
-    public boolean isStop() throws IOException {
+    public boolean isStop() {
         try {
             System.out.print("다시 구성하시겠습니까? (y or n): ");
             String input = read();
@@ -137,7 +137,7 @@ public class LeetsMateApplication {
         }
     }
 
-    public String read() throws IOException {
+    public String read() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             return Optional.of(br.readLine())
@@ -146,10 +146,12 @@ public class LeetsMateApplication {
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             return read();
+        } catch (IOException e) {
+            throw new RuntimeException("[ERROR] 입력을 읽는 중 오류가 발생했습니다.", e);
         }
     }
 
-    public int getSize(int memberCnt) throws IOException {
+    public int getSize(int memberCnt) {
         try {
             return checkDataValidity(memberCnt, Integer.parseInt(read()));
         } catch (InvalidInputException e) {

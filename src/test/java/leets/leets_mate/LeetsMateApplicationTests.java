@@ -19,7 +19,7 @@ class LeetsMateApplicationTests {
     }
 
     @Test
-    void 입력받은_문자열을_파싱하여_리스트로_만든다() throws IOException {
+    void 입력받은_문자열을_파싱하여_리스트로_만든다() {
         String members = "리츠에,오신,걸,환영합니다";
         List<String> actual = app.parseMembers(members);
         assertThat(actual).containsExactly("리츠에", "오신", "걸", "환영합니다");

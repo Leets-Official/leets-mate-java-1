@@ -41,7 +41,7 @@ public class LeetsMateApplication {
         int size = getSize(memberNumber(memberList));
 
         // 3. 짝 추첨 -> 출력
-        repeat(memberList, size);
+        executeDraw(memberList, size);
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
@@ -105,20 +105,19 @@ public class LeetsMateApplication {
         System.out.println(sb);
     }
 
-    public void repeat(List<String> memberList, int size) throws InvalidInputException {
-        boolean isFixed = false;
-        while (!isFixed) {
+    // 원하는 결과가 나올 때까지 추첨을 진행하는 함수입니다.
+    public void executeDraw(List<String> memberList, int size) throws InvalidInputException {
+        do {
             System.out.println("\n오늘의 짝 추천 결과입니다.");
 
             List<List<String>> result = generateRandomGroups(memberList, size); // 짝 추첨
             printResult(result);    // 출력
             System.out.println("추천을 완료했습니다.");
-
-            isFixed = isStop();
-        }
+        } while (!isBreak());
     }
 
-    public boolean isStop() {
+    // 추첨을 멈출 것인지 결정하는 함수입니다.
+    public boolean isBreak() {
         while(true) {
             try {
                 System.out.print("다시 구성하시겠습니까? (y or n): ");
@@ -139,6 +138,7 @@ public class LeetsMateApplication {
         }
     }
 
+    // 사용자의 모든 입력을 처리하는 함수입니다.
     public String read() {
         while(true) {
             try {
@@ -154,6 +154,7 @@ public class LeetsMateApplication {
         }
     }
 
+    // 그룹의 크기를 가져오는 함수입니다.
     public int getSize(int memberCnt) {
         while(true) {
             try {

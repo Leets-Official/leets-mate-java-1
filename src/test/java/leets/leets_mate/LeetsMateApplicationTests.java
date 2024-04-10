@@ -3,6 +3,7 @@ package leets.leets_mate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,7 @@ class LeetsMateApplicationTests {
     }
 
     @Test
-    void 입력받은_문자열을_파싱하여_리스트로_만든다() {
+    void 입력받은_문자열을_파싱하여_리스트로_만든다() throws IOException {
         String members = "리츠에,오신,걸,환영합니다";
         List<String> actual = app.parseMembers(members);
         assertThat(actual).containsExactly("리츠에", "오신", "걸", "환영합니다");

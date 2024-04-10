@@ -71,23 +71,28 @@ public class LeetsMateApplication {
 
         List<List<String>> result = new ArrayList<>();
 
-        if (memberNumber(memberList) % maximumGroupSize != 0) {
-            row = memberNumber(memberList) / maximumGroupSize + 1;
-        } else {
-            row = memberNumber(memberList) / maximumGroupSize;
-        }
+        int memberCount = memberNumber(memberList);
+        int groupCount = memberCount / maximumGroupSize;
+        int remainingMembers = memberCount % maximumGroupSize;
 
-        for (int i = 0; i < row; i++) {
-            result.add(new ArrayList<>());
-        }
-
-        for (int i = 0; i < row; i++) {
-            for (int j = i * maximumGroupSize; j < maximumGroupSize * (i + 1); j++) {
-                if (j < memberNumber(memberList)) {
-                    result.get(i).add(memberList.get(j));
-                }
+        int currentIndex = 0;
+        for (int i = 0; i < groupCount; i++) {
+            List<String> group = new ArrayList<>();
+            for (int j = 0; j < maximumGroupSize; j++) {
+                group.add(memberList.get(currentIndex));
+                currentIndex++;
             }
+            result.add(group);
         }
+
+        if (remainingMembers > 0) {
+            List<String> lastGroup = new ArrayList<>();
+            for (int i = currentIndex; i < memberCount; i++) {
+                lastGroup.add(memberList.get(i));
+            }
+            result.add(lastGroup);
+        }
+
         return result;
     }
 

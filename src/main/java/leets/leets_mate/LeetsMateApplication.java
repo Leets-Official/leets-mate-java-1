@@ -4,10 +4,6 @@ import java.util.*;
 
 public class LeetsMateApplication {
 
-    static String members;
-    static List<String> memberList;
-    static int row, column;
-
     // 동작 함수입니다.
     public void run() throws Exception {
         Scanner sc = new Scanner(System.in);
@@ -15,25 +11,25 @@ public class LeetsMateApplication {
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.\n");
 
         System.out.println("참석자들의 이름을 입력해 주세요. (,로 구분)");
-        members = sc.nextLine();
+        String members = sc.nextLine();
 
         checkHasNoEnglish(members);
 
         System.out.println("\n최대 짝 수를 입력해 주세요.");
-        column = sc.nextInt();
+        int maximumGroupSize = sc.nextInt();
 
-        memberList = parseMembers(members);
+        List<String> memberList = parseMembers(members);
 
-        checkDataValidity(memberNumber(memberList), column);
+        checkDataValidity(memberNumber(memberList), maximumGroupSize);
 
-        printResult(generateRandomGroups(memberList, column));
+        printResult(generateRandomGroups(memberList, maximumGroupSize));
 
         while (true) {
             System.out.print("다시 구성하시겠습니까? (y or n): ");
             String answer = sc.next();
 
             if (answer.equals("y")) {
-                printResult(generateRandomGroups(memberList, column));
+                printResult(generateRandomGroups(memberList, maximumGroupSize));
             } else {
                 System.out.println("자리를 이동해 서로에게 인사해주세요.");
                 break;

@@ -1,8 +1,7 @@
-package leets.leets_mate.exception;
+package leets.leets_mate.validation.exception;
 
 public class InvalidInputException extends RuntimeException {
     public InvalidInputException(String message) {
         super(message);
     }
-
 }

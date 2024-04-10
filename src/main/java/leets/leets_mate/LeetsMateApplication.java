@@ -1,6 +1,6 @@
 package leets.leets_mate;
 
-import leets.leets_mate.exception.InvalidInputException;
+import leets.leets_mate.validation.exception.InvalidInputException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,25 +34,26 @@ public class LeetsMateApplication {
                 멤버의 이름을 입력해주세요. (, 로 구분)""");
 
         // 1. 이름 입력 받기
-        List<String> memberList = parseMembers();
+        List<String> memberList = parseMembers(read());
 
         // 2. 인원 수 입력 받기
         System.out.println("최대 짝 수를 입력해주세요.");
-        int size = getSize(memberNumber(memberList));
+        int size = getSize(checkInteger(read()), memberNumber(memberList));
 
         // 3. 짝 추첨 -> 출력
         executeDraw(memberList, size);
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
-    public List<String> parseMembers() {
+    public List<String> parseMembers(String members) {
         while(true) {
             try {
-                return Arrays.stream(read().split(","))
+                return Arrays.stream(members.split(","))
                         .peek(this::checkHasNoEnglish)  // validation
                         .collect(Collectors.toList());
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
+                members = read();
             }
         }
     }
@@ -60,21 +61,6 @@ public class LeetsMateApplication {
     // 총 멤버수를 반환합니다.
     public int memberNumber(List<String> members) {
         return members.size();
-    }
-
-    // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력
-    public void checkHasNoEnglish(String members) throws InvalidInputException {
-        if (!members.matches("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"))
-            throw new InvalidInputException("[ERROR] 이름은 공백없이 한글로 입력해야 합니다. 다시 입력해주세요.");
-    }
-
-    // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
-    public int checkDataValidity(int memberCount, int maximumGroupSize) throws InvalidInputException {
-        if (memberCount < maximumGroupSize)
-            throw new InvalidInputException("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다. 다시 입력해주세요.");
-        else if (maximumGroupSize < 1)
-            throw new InvalidInputException("[ERROR] 최대 짝 수는 1보다 작을 수 없습니다. 다시 입력해주세요.");
-        return maximumGroupSize;
     }
 
     // 랜덤 짝꿍 추첨하는 함수 입니다.
@@ -155,13 +141,34 @@ public class LeetsMateApplication {
     }
 
     // 그룹의 크기를 가져오는 함수입니다.
-    public int getSize(int memberCnt) {
+    public int getSize(int size, int memberCnt) {
         while(true) {
             try {
-                return checkDataValidity(memberCnt, Integer.parseInt(read()));
+                return checkDataValidity(memberCnt, size);
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
+                size = checkInteger(read());
             }
         }
+    }
+
+    // validation
+    public void checkHasNoEnglish(String members) throws InvalidInputException {
+        if (!members.matches("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"))
+            throw new InvalidInputException("[ERROR] 이름은 공백없이 한글로 입력해야 합니다. 다시 입력해주세요.");
+    }
+
+    public int checkDataValidity(int memberCount, int maximumGroupSize) throws InvalidInputException {
+        if (memberCount < maximumGroupSize)
+            throw new InvalidInputException("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다. 다시 입력해주세요.");
+        else if (maximumGroupSize < 1)
+            throw new InvalidInputException("[ERROR] 최대 짝 수는 1보다 작을 수 없습니다. 다시 입력해주세요.");
+        return maximumGroupSize;
+    }
+
+    public int checkInteger(String s) throws InvalidInputException {
+        if(!s.matches("\\d+"))
+            throw new InvalidInputException("[ERROR] 알맞은 짝의 크기를 입력해주세요.");
+        return Integer.parseInt(s);
     }
 }

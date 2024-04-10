@@ -32,7 +32,7 @@ public class LeetsMateApplication {
                     멤버의 이름을 입력해주세요. (, 로 구분)""");
 
             // 1. 이름 입력 받기
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // #1
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String memberStr = br.readLine();
 
             List<String> memberList = parseMembers(memberStr);
@@ -99,7 +99,7 @@ public class LeetsMateApplication {
 
     // 결과를 프린트 하는 함수입니다.
     public void printResult(List<List<String>> result) {
-        StringBuilder sb = new StringBuilder(); // #2
+        StringBuilder sb = new StringBuilder();
         for (List<String> teams : result) {
             Iterator<String> iter = teams.iterator();
             sb.append("[");
@@ -137,29 +137,3 @@ public class LeetsMateApplication {
         }
     }
 }
-
-/**
- * #1
- * Scanner
- * - 띄어쓰기, 개행으로 값 인식 -> 가공할 필요가 없음
- * - 데이터 타입에 맞게 입력 받을 수 있음
- * - 데이터 입력받을 때마다 사용자에게 즉시 전달 -> 느림
- * BufferedReader
- * - 추가 가공이 필요함
- * - 데이터 타입 변환 작업 필요
- * - 데이터를 버퍼에 담아두다가 입력이 끝나면 한 번에 사용자에게 전달 -> 빠름
- *
- * 문제 조건에선 String으로 값을 한 번에 받고, 가공하는 작업을 parseMember 메서드에서 진행하게 돼있으므로
- * 입력 값의 길이가 길수록 유리한 BufferedReader 선택
- *
- *
- * #2
- * String
- * - String 객체 값은 불변
- * StringBuffer/StringBuilder
- * - 객체의 공간이 부족할 경우 버퍼의 크기를 유연하게 늘려주어 가변적 -> 문자열의 CUD가 빈번하다면 String보다 유리
- *
- * 하지만 String의 + 연산자의 내부 구조는 StringBuilder 객체가 생성되고 연산을 하므로 합치는 연산은 String과 StringBuilder의 차이가 없다
- * 그러나 연산이 빈번히 발생할 경우 StringBuilder의 객체가 빈번히 생성-삭제를 해야하므로 메모리 측면에서 불리하다
- * 따라서 연산이 빈번할 경우엔 StringBuffer/StringBuilder를 사용하는 것이 좋다
- */

@@ -53,7 +53,7 @@ public class LeetsMateApplication {
 
     // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력
     public void checkHasNoEnglish(String members) throws Exception {
-        if (members.matches("^[a-zA-Z]*$")) {
+        if (members.matches(".*[a-zA-Z].*")) {
             throw new Exception("[ERROR] 이름은 한글로 입력해야 합니다");
         }
     }

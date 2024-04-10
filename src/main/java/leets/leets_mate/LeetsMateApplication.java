@@ -6,11 +6,9 @@ import java.util.stream.Collectors;
 public class LeetsMateApplication {
 
     private final Scanner scanner;
-    public LeetsMateApplication() {
-        this.scanner = new Scanner(System.in);
-    }
+    public LeetsMateApplication() { this.scanner = new Scanner(System.in);}
 
-    // 동작 함수입니다.
+    // 동작 함수
     public void run() {
         System.out.println("[Leets 오늘의 짝에게]를 시작 합니다. >!<");
 
@@ -29,7 +27,7 @@ public class LeetsMateApplication {
             printResult(result);
 
             // 다시하기
-            if (askForRetry()) {
+            if (Retry()) {
                 run();
             } else {
                 System.out.println("자리를 이동해 서로에게 인사해주세요. *^.^*");
@@ -41,24 +39,20 @@ public class LeetsMateApplication {
     }
 
     // 멤버의 이름 받기
-    //-> 기존 주어진 parseMembers 함수(리스트로 분리하는 함수)를 따로 만들어야 하는 이유를 모르겠어서, getMembers함수로 처리하였습니다.
-    //-> 기존 주어진 checkHasNoEnglish 함수(멤버 문자열에 영어 검사 함수)는 예외처리보단, 필터링 처리가 더 맞다고 생각하여 수정하였습니다.
     private List<String> getMembers() {
         List<String> memberList;
         while (true) {
             System.out.println("멤버의 이름을 입력해 주세요. (, 로 구분)");
             String input = scanner.nextLine();
 
-            // 입력된 값이 영어가 포함 검사
+            // 입력된 값이 한글이 아닌 경우
             if (containsEnglish(input)) {
                 System.out.println("[ERROR] 영어가 포함되어 있습니다. 한글로 이름을 입력해주세요.");
                 continue;
             }
 
             // 문자열 ","로 분리 + 한글 이름만 필터링으로 리스트 반환
-            memberList = Arrays.stream(input.split(", "))
-                    .filter(name -> name.matches("[가-힣]+"))
-                    .collect(Collectors.toList());
+            memberList = parseMembers(input);
 
             // 입력된 맴버가 없을 경우, 에러 메세지
             if (memberList.isEmpty()) {
@@ -76,6 +70,14 @@ public class LeetsMateApplication {
         return input.matches(".*[a-zA-Z].*");
     }
 
+    // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
+    private List<String> parseMembers(String membersString) {
+        return Arrays.stream(membersString.split(", "))
+                .filter(name -> name.matches("[가-힣]+"))
+                .map(String::trim) // 각 멤버 문자열의 앞뒤 공백 제거
+                .collect(Collectors.toList());
+    }
+
     // 최대 짝 수를 입력
     private int getMaximumGroupSize(int memberCount) {
         int maximumGroupSize;
@@ -90,7 +92,6 @@ public class LeetsMateApplication {
                     System.out.println("[ERROR] 최대 짝 수는 1 이상이고, 멤버 수 이하의 값이어야 합니다.");
                     continue;
                 }
-
                 break;
             } catch (InputMismatchException e) {
                 // 정수가 아닌 값을 입력할 경우, 에러 메세지 출력
@@ -100,6 +101,7 @@ public class LeetsMateApplication {
         }
         return maximumGroupSize;
     }
+
     // 랜덤 짝꿍 추첨 함수
     private List<List<String>> generateRandomGroups(List<String> memberList, int maximumGroupSize) {
         List<String> shuffledMembers = new ArrayList<>(memberList);
@@ -120,7 +122,7 @@ public class LeetsMateApplication {
     }
 
     // "다시하기" 함수
-    private boolean askForRetry() {
+    private boolean Retry() {
         System.out.println("다시 구성하시겠습니까? (y or n): ");
         String input = scanner.nextLine();
         return input.equalsIgnoreCase("y");

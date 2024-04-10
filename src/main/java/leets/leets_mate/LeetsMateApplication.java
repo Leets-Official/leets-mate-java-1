@@ -34,7 +34,7 @@ public class LeetsMateApplication {
                 멤버의 이름을 입력해주세요. (, 로 구분)""");
 
         // 1. 이름 입력 받기
-        List<String> memberList = parseMembers(read());
+        List<String> memberList = parseMembers();
 
         // 2. 인원 수 입력 받기
         System.out.println("최대 짝 수를 입력해주세요.");
@@ -45,14 +45,15 @@ public class LeetsMateApplication {
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
-    public List<String> parseMembers(String members) {
-        try {
-            return Arrays.stream(members.split(","))
-                    .peek(this::checkHasNoEnglish)  // validation
-                    .collect(Collectors.toList());
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-            return parseMembers(read());    // 다시 입력받기
+    public List<String> parseMembers() {
+        while(true) {
+            try {
+                return Arrays.stream(read().split(","))
+                        .peek(this::checkHasNoEnglish)  // validation
+                        .collect(Collectors.toList());
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -118,45 +119,48 @@ public class LeetsMateApplication {
     }
 
     public boolean isStop() {
-        try {
-            System.out.print("다시 구성하시겠습니까? (y or n): ");
-            String input = read();
+        while(true) {
+            try {
+                System.out.print("다시 구성하시겠습니까? (y or n): ");
+                String input = read();
 
-            if (input.equals("y")) {    // 재구성
-                System.out.println("--------------------------------");
-                return false;
-            } else if (input.equals("n")) { // 고정
-                System.out.println("자리를 이동해 서로에게 인사해주세요.");
-                return true;
-            } else {    // 그 외의 잘못된 응답 처리
-                throw new InvalidInputException("[ERROR] 응답은 y 혹은 n으로 입력해야 합니다.");
+                if (input.equals("y")) {    // 재구성
+                    System.out.println("--------------------------------");
+                    return false;
+                } else if (input.equals("n")) { // 고정
+                    System.out.println("자리를 이동해 서로에게 인사해주세요.");
+                    return true;
+                } else {    // 그 외의 잘못된 응답 처리
+                    throw new InvalidInputException("[ERROR] 응답은 y 혹은 n으로 입력해야 합니다.");
+                }
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-            return isStop();
         }
     }
 
     public String read() {
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            return Optional.of(br.readLine())
-                    .filter(input -> !input.trim().isEmpty())
-                    .orElseThrow(() -> new InvalidInputException("[ERROR] 값을 입력해주세요.")); // validation
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-            return read();
-        } catch (IOException e) {
-            throw new RuntimeException("[ERROR] 입력을 읽는 중 오류가 발생했습니다.", e);
+        while(true) {
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                return Optional.of(br.readLine())
+                        .filter(input -> !input.trim().isEmpty())
+                        .orElseThrow(() -> new InvalidInputException("[ERROR] 값을 입력해주세요.")); // validation
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            } catch (IOException e) {
+                throw new RuntimeException("[ERROR] 입력을 읽는 중 오류가 발생했습니다.", e);
+            }
         }
     }
 
     public int getSize(int memberCnt) {
-        try {
-            return checkDataValidity(memberCnt, Integer.parseInt(read()));
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
-            return getSize(memberCnt);
+        while(true) {
+            try {
+                return checkDataValidity(memberCnt, Integer.parseInt(read()));
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

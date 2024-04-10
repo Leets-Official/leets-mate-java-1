@@ -102,21 +102,18 @@ public class LeetsMateApplication {
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < row; i++) {
+        for (List<String> row : result) {
             sb.append("[ ");
-            for (int j = 0; j < column; j++) {
-                sb.append(result.get(i).get(j));
+            for (int j = 0; j < row.size(); j++) {
+                sb.append(row.get(j));
 
-                if (i == row - 1 && j == memberNumber(memberList) % column - 1) {
-                    break;
-                }
-
-                if (j < column - 1) {
+                if (j < row.size() - 1) {
                     sb.append(" | ");
                 }
             }
             sb.append(" ]\n");
         }
+
         sb.append("\n추천을 완료했습니다.\n");
         System.out.println(sb);
     }

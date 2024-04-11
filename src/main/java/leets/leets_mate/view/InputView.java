@@ -41,6 +41,7 @@ public class InputView {
 
             checkDataValidity(memberCount, maximumGroupSize);
 
+            System.out.println();
             return maximumGroupSize;
         } catch (InputMismatchException e) {
             System.out.println(IllegalArgumentExceptionType.INVALID_MAX_GROUP.getMessage());
@@ -52,7 +53,6 @@ public class InputView {
         }
     }
 
-    // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력
     public static void checkHasNoEnglish(String member) {
         // Character.isAlphabetic()은 영어인지 구별해주는게 아닌 숫자와 문자를 구분해준다!
 //        for(char c : member.toCharArray()) {
@@ -65,7 +65,6 @@ public class InputView {
         }
     }
 
-    // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
     public static void checkDataValidity(int memberCount, int maximumGroupSize) {
         if (memberCount < maximumGroupSize) {
             throw IllegalArgumentExceptionType.GROUP_SIZE_EXCEEDS_MEMBER_COUNT.getException();
@@ -80,7 +79,7 @@ public class InputView {
             } else if (c == 'n') {
                 return false;
             } else
-                throw IllegalArgumentExceptionType.IVALID_RETRY_INPUT.getException();
+                throw IllegalArgumentExceptionType.INVALID_RETRY_INPUT.getException();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readRetry();

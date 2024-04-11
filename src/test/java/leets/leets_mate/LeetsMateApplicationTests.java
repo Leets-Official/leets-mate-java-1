@@ -1,10 +1,9 @@
 package leets.leets_mate;
 
+import leets.leets_mate.domain.MaxGroupSize;
+import leets.leets_mate.domain.Members;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,33 +14,36 @@ class LeetsMateApplicationTests {
     @BeforeEach
     void setUp() {
         app = new LeetsMateApplication();
+        Members members = new Members("나는,양태석,이다");
+        MaxGroupSize maxGroupSize = new MaxGroupSize(2);
     }
 
     @Test
-    void 입력받은_문자열을_파싱하여_리스트로_만든다() {
-        String members = "리츠에,오신,걸,환영합니다";
-        List<String> actual = app.parseMembers(members);
-        assertThat(actual).containsExactly("리츠에", "오신", "걸", "환영합니다");
+    void Members_객체_생성() {
+        Members members = new Members("나는,양태석,이다");
+        assertThat(members.membersList).containsExactly("나는", "양태석", "이다");
     }
 
     @Test
     void 멤버수를_반환한다() {
-        List<String> members = Arrays.asList("리츠에", "오신", "걸", "환영합니다");
-        int actual = app.memberNumber(members);
-        assertThat(actual).isEqualTo(4);
+        Members members = new Members("나는,양태석,이다");
+        int actual = members.getCount();
+        assertThat(actual).isEqualTo(3);
     }
 
     @Test
     void 멤버수와_최대_멤버수를_잘못_입력한_경우_예외를_반환한다() {
+        Members members = new Members("나는,양태석,이다");
+        MaxGroupSize maxGroupSize = new MaxGroupSize(4);
         assertThrows(Exception.class, () -> {
-            app.checkDataValidity(3, 4);
+            maxGroupSize.checkMemberCountBelowMaxGroupSize(members.getCount());
         });
     }
 
     @Test
     void 멤버_문자열에_영어를_입력한_경우_예외를_반환한다() {
         assertThrows(Exception.class, () -> {
-            app.checkHasNoEnglish("welcome,to,leets");
+            Members members = new Members("hello");
         });
     }
 }

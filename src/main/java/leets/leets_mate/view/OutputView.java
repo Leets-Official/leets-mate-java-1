@@ -20,6 +20,7 @@ public class OutputView {
 
     // 결과를 프린트 하는 함수입니다.
     public static void printResult(List<List<Member>> result) {
+        System.out.println();
         System.out.println("오늘의 짝 추천 결과입니다.");
         for (List<Member> group : result) {
 
@@ -30,5 +31,10 @@ public class OutputView {
 
             System.out.println("[ " + groupResult + " ]");
         }
+    }
+
+    public static void printCompletionMessage() {
+        System.out.println();
+        System.out.println("추천을 완료했습니다.");
     }
 }

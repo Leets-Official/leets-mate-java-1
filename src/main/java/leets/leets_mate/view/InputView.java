@@ -60,7 +60,7 @@ public class InputView {
 //                throw IllegalArgumentExceptionType.INVALID_NAMING.getException();
 //            }
 //        }
-        if (Pattern.matches("^[a-zA-Z]*$", member)) {
+        if (Pattern.matches(".*[a-zA-Z]+.*", member)) {
             throw IllegalArgumentExceptionType.INVALID_NAMING.getException();
         }
     }

@@ -8,9 +8,9 @@ public class LeetsMateApplication {
     public void run() {
         System.out.println("멤버의 이름을 입력해 주세요. (, 로 구분)");
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        checkHasNoEnglish(input);
-        List<String> memberList = parseMembers(input);
+        String memberInput = sc.nextLine();
+        checkHasNoEnglish(memberInput);
+        List<String> memberList = parseMembers(memberInput);
         System.out.println("최대 짝 수를 입력해 주세요.");
         int maxNum = Integer.parseInt(sc.nextLine());
         checkDataValidity(memberList.size(), maxNum);

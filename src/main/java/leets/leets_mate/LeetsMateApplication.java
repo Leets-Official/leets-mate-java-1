@@ -14,15 +14,15 @@ public class LeetsMateApplication {
         Collections.addAll(memberList, memberCount.split(","));
 
         System.out.println("최대 짝 수를 입력해 주세요.");
-        int maximumGroupSize = scanner.nextInt();
+        int maximumGroupSize = Integer.parseInt(scanner.nextLine());
         checkDataValidity(memberList.size(), maximumGroupSize);
 
         List<List<String>> result = generateRandomGroups(memberList, maximumGroupSize);
         printResult(result);
 
         while (true) {
-            String s = scanner.nextLine();
             System.out.print("다시 구성하시겠습니까? (y or n): ");
+            String s = scanner.nextLine();
 
             if (s.equalsIgnoreCase("n")) {
                 System.out.println("자리 이동 후 서로 인사해주세요~");
@@ -39,7 +39,6 @@ public class LeetsMateApplication {
 
 
     }
-
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
     public List<String> parseMembers(String members) {
         String[] memberArray = members.split(",");

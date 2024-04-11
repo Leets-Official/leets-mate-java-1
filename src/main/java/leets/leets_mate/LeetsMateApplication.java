@@ -3,17 +3,19 @@ package leets.leets_mate;
 import java.util.*;
 
 public class LeetsMateApplication {
+    String newline = System.lineSeparator();
+
     // 동작 함수입니다.
     public void run() throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.");
 
-        System.out.println("\n참석자들의 이름을 입력해 주세요. (,로 구분)");
-        String inputStr = sc.nextLine();
-        List<String> members = parseMembers(inputStr);
+        System.out.println(newline + "참석자들의 이름을 입력해 주세요. (,로 구분)");
+        String memberNamesInput = sc.nextLine();
+        List<String> members = parseMembers(memberNamesInput);
 
 
-        System.out.println("\n최대 짝 수를 입력해 주세요.");
+        System.out.println(newline + "최대 짝 수를 입력해 주세요.");
         int maximumGroupSize = sc.nextInt();
         sc.nextLine(); // 개행문자 제거
         checkDataValidity(memberNumber(members), maximumGroupSize);
@@ -26,7 +28,7 @@ public class LeetsMateApplication {
             System.out.print("다시 구성하시겠습니까? (y or n): ");
             String operator = sc.nextLine();
 
-            result = ask(operator);
+            result = isDone(operator);
         }
 
         System.out.println("자리를 이동해 서로에게 인사해주세요.");
@@ -63,22 +65,19 @@ public class LeetsMateApplication {
         Collections.shuffle(memberList);
 
         List<List<String>> result = new ArrayList<>();
-        List<String> temp = new ArrayList<>();
-        int i = 0;
+        List<String> currentGroup = new ArrayList<>();
 
         for (String member : memberList) {
-            temp.add(member);
-            i++;
+            currentGroup.add(member);
 
-            if (i == maximumGroupSize) {
-                i = 0;
-                result.add(new ArrayList<>(temp));
-                temp.clear();
+            if (currentGroup.size() == maximumGroupSize) {
+                result.add(new ArrayList<>(currentGroup));
+                currentGroup.clear();
             }
         }
 
-        if (!temp.isEmpty()) {
-            result.add(new ArrayList<>(temp));
+        if (!currentGroup.isEmpty()) {
+            result.add(new ArrayList<>(currentGroup));
         }
 
         return result;
@@ -91,29 +90,31 @@ public class LeetsMateApplication {
         StringBuilder sb = new StringBuilder();
 
         for (List<String> group : result) {
-            sb.append("[");
+            StringJoiner sj = new StringJoiner(" | ", "[ ", " ]");
 
-            for (int i = 0; i < group.size() - 1; i++) {
-                sb.append(" ").append(group.get(i)).append(" |");
+            for (String member : group) {
+                sj.add(member);
             }
 
-            sb.append(" ").append(group.get(group.size() - 1)).append(" ]\n");
+            sb.append(sj).append(newline);
         }
 
-        sb.append("\n추천을 완료했습니다.");
-        System.out.println(sb.toString());
+        sb.append(newline).append("추천을 완료했습니다.");
+        System.out.println(sb);
     }
 
     // 다시 추천을 할지 물어보는 함수입니다.
-    public boolean ask(String operator) throws Exception {
-        if (operator.equals("n")) return false;
+    public boolean isDone(String operator) throws Exception {
+        if (operator.equals("n")) {
+            return false;
+        }
 
-        else if (operator.equals("y")){
+        if (operator.equals("y")) {
             System.out.println("--------------------------------");
             return true;
         }
 
-        else throw new Exception("[ERROR] y 또는 n을 입력해주세요.");
+        throw new Exception("[ERROR] y 또는 n을 입력해주세요.");
     }
 
     public static void main(String[] args) throws Exception {

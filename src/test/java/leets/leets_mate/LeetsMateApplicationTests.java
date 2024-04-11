@@ -48,7 +48,7 @@ class LeetsMateApplicationTests {
     @Test
     void 다시_추천_명령_에서_y나_n을_누르지_않은_경우_예외를_반환한다() {
         assertThrows(Exception.class, () -> {
-            app.ask("a");
+            app.isDone("a");
         });
     }
 }

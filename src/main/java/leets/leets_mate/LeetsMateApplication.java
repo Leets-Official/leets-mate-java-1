@@ -7,9 +7,12 @@ public class LeetsMateApplication {
 
     // 동작 함수입니다.
     public void run() {
-        Scanner sc = new Scanner(System.in);
-        String members = sc.nextLine();
-        int ret = 1;
+        Scanner input = new Scanner(System.in); // Scanner 클래스 생성
+        int ret = 1;    // loop 돌리기 위한 변수 설정
+
+        // 멤버 이름 입력
+        System.out.println("멤버의 이름을 입력해 주세요. (, 로 구분)");
+        String members = input.nextLine();
 
         // 영어 없는지 확인
         checkHasNoEnglish(members);
@@ -19,8 +22,10 @@ public class LeetsMateApplication {
 
         // 멤버 명수 확인
         int memberCount = memberNumber(memArray);
+
         // 이름 개수보다 짝 수가 더 많으면 예외발생
-        int maximumGroupSize = Integer.parseInt(sc.nextLine());
+        System.out.println("\n"+"최대 짝 수를 입력해 주세요.");
+        int maximumGroupSize = Integer.parseInt(input.nextLine());
         checkDataValidity(memberCount, maximumGroupSize);
 
 
@@ -30,15 +35,15 @@ public class LeetsMateApplication {
             // 랜덤 짝궁 추천
             printResult(generateRandomGroups(memArray, maximumGroupSize));
 
-            System.out.print("다시 구성하시겠습니까? (y or n): ");
-            String re = sc.nextLine();
+            System.out.print("\n"+"다시 구성하시겠습니까? (y or n): ");
+            String re = input.nextLine();
             System.out.println("--------------------------------");
             ret = reGeneration(re);
 
             if(ret != 1) break;
         }
 
-        sc.close();
+        input.close();
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
@@ -87,7 +92,7 @@ public class LeetsMateApplication {
 
     // 결과를 프린트 하는 함수입니다.
     public void printResult(List<List<String>> result) {
-        System.out.println("오늘의 짝 추천 결과입니다.");
+        System.out.println("\n"+"오늘의 짝 추천 결과입니다.");
         for (List<String> group : result) {
             System.out.print("[ ");
             for (int i = 0; i < group.size(); i++) {
@@ -98,15 +103,15 @@ public class LeetsMateApplication {
             }
             System.out.println(" ]");
         }
-        System.out.println("추천을 완료했습니다.");
+        System.out.println("\n"+"추천을 완료했습니다.");
     }
 
     // 다시 추첨을 진행하는 함수입니다.
     public int reGeneration(String re) {
-        if(Objects.equals(re, "n")) {
+        if(re.equals("n")) {
             System.out.println("자리를 이동해 서로에게 인사해주세요.");
             return 0;
-        } else if (Objects.equals(re, "y")) {
+        } else if (re.equals("y")) {
             return 1;
         } else {
             throw new IllegalArgumentException("[ERROR] y또는 n을 입력해야 합니다");

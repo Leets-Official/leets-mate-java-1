@@ -4,6 +4,7 @@ import java.util.*;
 
 public class LeetsMateApplication {
     Scanner scanner = new Scanner(System.in);
+
     // 동작 함수입니다.
     public void run() {
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.");
@@ -18,6 +19,25 @@ public class LeetsMateApplication {
 
         List<List<String>> result = generateRandomGroups(memberList, maximumGroupSize);
         printResult(result);
+
+        while (true) {
+            String s = scanner.nextLine();
+            System.out.print("다시 구성하시겠습니까? (y or n): ");
+
+            if (s.equalsIgnoreCase("n")) {
+                System.out.println("자리 이동 후 서로 인사해주세요~");
+                System.out.println("프로그램을 종료합니다.");
+                break;
+            } else if(s.equalsIgnoreCase("y")){
+                result = generateRandomGroups(memberList, maximumGroupSize);
+                printResult(result);
+            }
+            else{
+                throw new RuntimeException("[ERROR] y나 n을 입력해주세요");
+            }
+        }
+
+
     }
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
@@ -66,13 +86,8 @@ public class LeetsMateApplication {
             List<String> group = result.get(i);
             System.out.println("[" + String.join("| ", group) + "]");
         }
-        System.out.print("다시 구성하시겠습니까? (y or n): ");
-        String answer = scanner.nextLine();
-        if (answer.equalsIgnoreCase("n")) {
-            System.out.println("프로그램을 종료합니다.");
-        }  else {
-            run();
-        }
+
+
     }
 
     public static void main(String[] args) {

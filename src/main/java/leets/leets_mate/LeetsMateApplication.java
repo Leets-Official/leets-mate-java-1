@@ -64,7 +64,7 @@ public class LeetsMateApplication {
         System.out.println("오늘의 짝 추천 결과입니다.");
         for (int i = 0; i < result.size(); i++) {
             List<String> group = result.get(i);
-            System.out.println("그룹 " + (i + 1) + ": " + String.join(", ", group));
+            System.out.println("[" + String.join("| ", group) + "]");
         }
         System.out.print("다시 구성하시겠습니까? (y or n): ");
         String answer = scanner.nextLine();

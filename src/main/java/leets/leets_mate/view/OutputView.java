@@ -38,6 +38,10 @@ public class OutputView {
     }
 
     public static void printCanYouRetry() {
-        System.out.println("다시 구성하시겠습니까? (y or n): y");
+        System.out.println("다시 구성하시겠습니까? (y or n): ");
+    }
+
+    public static void printDontWantRetry() {
+        System.out.println("자리를 이동해 서로에게 인사해주세요.");
     }
 }

@@ -14,12 +14,10 @@ public class LeetsMateApplication {
         System.out.println("최대 짝 수를 입력해 주세요.");
         int maxNum = Integer.parseInt(sc.nextLine());
         checkDataValidity(memberList.size(), maxNum);
-        String flag ="true";
-        while (flag.equals("true") || flag.equals("exception")) {
-            if (!flag.equals("exception")) {
-                printResult(generateRandomGroups(memberList,maxNum));
-            }
-            flag = isContinue();
+        Boolean isDone = true;
+        while (isDone .equals(true)) {
+            printResult(generateRandomGroups(memberList,maxNum));
+            isDone = isContinue();
         }
     }
 
@@ -93,19 +91,23 @@ public class LeetsMateApplication {
         System.out.println("추천을 완료했습니다.");
     }
 
-    public static String isContinue() {
+    public static Boolean isContinue() {
         System.out.print("다시 구성하시겠습니까? (y or n): ");
-        Scanner sc = new Scanner(System.in);
-        String q = sc.nextLine();
-        if (q.equals("n")) {
-            System.out.println("자리를 이동해 서로에게 인사해주세요.");
-            return "false";
-        } else if (q.equals("y")) {
-            System.out.println("--------------------------------");
-            return "true";
-        } else {
-            System.out.println("[ERROR] y 혹은 n만 입력해주세요.");
-            return "exception";
+        try {
+            Scanner sc = new Scanner(System.in);
+            String continueFlag = sc.nextLine();
+            if (continueFlag.equals("n")) {
+                System.out.println("자리를 이동해 서로에게 인사해주세요.");
+                return false;
+            } else if (continueFlag.equals("y")) {
+                System.out.println("--------------------------------");
+                return true;
+            } else {
+                throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력해주세요.");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return isContinue();
         }
     }
 

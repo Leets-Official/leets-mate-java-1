@@ -2,6 +2,7 @@ package leets.leets_mate.view;
 
 import leets.leets_mate.view.exception.IllegalArgumentExceptionType;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,7 @@ public class InputView {
     }
 
     public static String[] readMember() {
+        OutputView.printStartMessage();
         try {
             String input = kb.nextLine();
             String[] members = input.split(",");
@@ -25,22 +27,28 @@ public class InputView {
             return members;
         }
         catch (IllegalArgumentException e) {
-//            System.out.println(""); 추후 이부분은 enum으로 동아리 부원를 관리했을 때 없는 동아리 부원을 입력하면 에러메시지 출력
+            System.out.println(e.getMessage()); // 추후 이부분은 enum으로 동아리 부원를 관리했을 때 없는 동아리 부원을 입력하면 에러메시지 출력도 하도록 구현
             return readMember();
         }
     }
 
-    public static int readMaxGroup() {
+    public static int readMaxGroup(String[] members) {
+        OutputView.printMaxGroup();
         try {
-            int memberCount = readMember().length;
+            int memberCount = members.length;
             int maximumGroupSize = kb.nextInt();
+            kb.nextLine();
 
             checkDataValidity(memberCount, maximumGroupSize);
 
             return memberCount;
-        } catch (IllegalArgumentException e){
+        } catch (InputMismatchException e) {
             System.out.println(IllegalArgumentExceptionType.INVALID_MAX_GROUP.getMessage());
-            return readMaxGroup();
+            kb.nextLine();
+            return readMaxGroup((members));
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return readMaxGroup(members);
         }
     }
 
@@ -52,14 +60,14 @@ public class InputView {
 //                throw IllegalArgumentExceptionType.INVALID_NAMING.getException();
 //            }
 //        }
-        if (!Pattern.matches("^[a-zA-Z]*$", member)) {
+        if (Pattern.matches("^[a-zA-Z]*$", member)) {
             throw IllegalArgumentExceptionType.INVALID_NAMING.getException();
         }
     }
 
     // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
     public static void checkDataValidity(int memberCount, int maximumGroupSize) {
-        if (memberCount > maximumGroupSize) {
+        if (memberCount < maximumGroupSize) {
             throw IllegalArgumentExceptionType.GROUP_SIZE_EXCEEDS_MEMBER_COUNT.getException();
         }
     }

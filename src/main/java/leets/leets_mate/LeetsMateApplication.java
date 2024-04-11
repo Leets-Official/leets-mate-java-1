@@ -6,14 +6,14 @@ public class LeetsMateApplication {
 
     // 동작 함수입니다.
     public void run() throws Exception {
-        Boolean playagain = true;
-        while(playagain) {
+        Boolean isDone = false;
+        while(!isDone) {
             Scanner sc = new Scanner(System.in);
             System.out.println("참석자들의 이름을 입력해 주세요. (,로 구분)");
             String str = sc.nextLine();
             checkHasNoEnglish(str);
             List<String> memberList = parseMembers(str);
-            System.out.println(Arrays.deepToString(memberList.toArray()));
+            System.out.println(Arrays.deepToString(memberList.toArray()));  //2차월 어레이 바로 출력
 
             int memberCount = memberNumber(memberList);
 
@@ -29,8 +29,8 @@ public class LeetsMateApplication {
             System.out.println("추천을 완료했습니다.\n다시 구성하시겠습니까? (y or n):");
 
             char again = sc.next().charAt(0);
-            if(again == 'n' || again == 'N'){
-                playagain = false;
+            if(!(again == 'y' || again == 'Y')){
+                isDone = true;      //n, N을 포함한 다른 입력은 다시시작x
             }
         }
         System.out.println("자리를 이동해 서로에게 인사해주세요");
@@ -45,7 +45,7 @@ public class LeetsMateApplication {
             if(members[i])
         }*/
 
-        members = members.replaceAll(", ", ",");
+        members = members.replaceAll(" ", "");  //공백 제거
         List<String> memberList = Arrays.asList(members.split(","));
         return memberList;
     }
@@ -78,21 +78,14 @@ public class LeetsMateApplication {
         Random r = new Random();
         int index;
 
-        ArrayList<String> selected = new ArrayList<String>();
-
-        for (int i = 0; i<size; i++){
-            index = r.nextInt(size); //0 - size-1s
-            while(selected.contains(memberList.get(index))){
-                index = r.nextInt(size); //0 - size-1
-            }
-            selected.add(memberList.get(index));
-        }//randomly select members
+        Collections.shuffle(memberList);    //순서 랜덤으로 섞기
+        //randomly select members
         //8/2 = 2, 2, 2, 2
         // 9/2 = 2, 2, 2, 2, 1
         // 8/4 = 4, 4
         // 9/4 = 4, 3, 2
         // 10/4 = 4, 4, 2 at least 2 people are in a group
-        int[] groupnum = new int[size/maximumGroupSize+10];
+        int[] groupNum = new int[size/maximumGroupSize+10];
         int times;
         if (size%maximumGroupSize==0){
             times = size/maximumGroupSize;  //the number of total groups
@@ -101,23 +94,24 @@ public class LeetsMateApplication {
             times = size/maximumGroupSize+1;    //the number of total groups
         }
 
-
+        //그룹 당 인원 수 정하기
         int left = size;
         //get num of members per group
         for(int i = 0; i<times; i++){
             if(left>=maximumGroupSize){
-                groupnum[i] = maximumGroupSize;
+                groupNum[i] = maximumGroupSize;
                 left-=maximumGroupSize;
             }
             else{
-                groupnum[i] = left;
+                groupNum[i] = left;
             }
         }
+
         //at least 2 people in a group
         if(left==1 && maximumGroupSize!=1 && maximumGroupSize !=2){
             //left alone
-            groupnum[times-2]--;
-            groupnum[times-1]++; //change group
+            groupNum[times-2]--;
+            groupNum[times-1]++; //change group
         }
         List<List<String>> result = new ArrayList<>();
 
@@ -125,8 +119,8 @@ public class LeetsMateApplication {
         int indexOfSelected = 0;
         for(int i = 0; i<times; i++){
             List<String> innerList = new ArrayList<>();
-            for(int j = 0; j<groupnum[i]; j++){
-                innerList.add(selected.get(indexOfSelected));   //add in the same group
+            for(int j = 0; j<groupNum[i]; j++){
+                innerList.add(memberList.get(indexOfSelected));   //add in the same group
                 indexOfSelected++;
             }// 4 4 4 3 2
             result.add(innerList);  //add the group to the result

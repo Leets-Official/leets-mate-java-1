@@ -103,7 +103,6 @@ public class LeetsMateApplication {
     }
 
     public void checkHasNoEnglish(String members) {
-        // TODO: 한글 아니면 전부
         String regex = "^[ㄱ-ㅎ|가-힣]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(members);

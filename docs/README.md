@@ -34,21 +34,20 @@
 **[ View ]**
 -
 
-- [ ]  **InputView**
+- [x]  **InputView**
 
 - 멤버 이름을 입력받음 (,로 구분)
 - 최대 짝 수를 입력받음
 - 다시 구성할지 말지 입력받음(y,n)
 
-- [ ]  **OutputView**
+- [x]  **OutputView**
 - 짝 추천 결과를 보여줌(default, y)
 - 인사 메세지를 보여줌(n)
 
 **[ Controller ]**
 -
 
-- [ ]  **MatchingController**
-
+- [x]  **MatchingController**
 짝궁 추천 요청을 처리하는 로직을 구현
 
 ### ✅ 예외 처리 - exception
@@ -71,6 +70,6 @@
 ---
 
 **retry 입력**
-- [ ] y와 n 이외의 숫자면 예외처리
+- [x] y와 n 이외의 숫자면 예외처리
 
 

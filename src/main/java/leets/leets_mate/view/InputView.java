@@ -71,4 +71,19 @@ public class InputView {
             throw IllegalArgumentExceptionType.GROUP_SIZE_EXCEEDS_MEMBER_COUNT.getException();
         }
     }
+
+    public static boolean readRetry() {
+        try {
+            char c = kb.next().charAt(0);
+            if (c == 'y') {
+                return true;
+            } else if (c == 'n') {
+                return false;
+            } else
+                throw IllegalArgumentExceptionType.IVALID_RETRY_INPUT.getException();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readRetry();
+        }
+    }
 }

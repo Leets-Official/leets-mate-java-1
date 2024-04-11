@@ -18,14 +18,14 @@ public class GroupService {
             group.add(member);
 
             if (group.size() == maximumGroupSize) {
-                groups.add(group);
-                group.clear();
+                groups.add(new ArrayList<>(group));
+                group = new ArrayList<>();
             }
         }
 
         // 현재로써는 빈 그룹이 추가될 가능성이 보이지 않긴하나, 혹시 모를 빈 그룹 추가 방지
         if (!group.isEmpty()) {
-            groups.add(group);
+            groups.add(new ArrayList<>(group));
         }
 
         return groups;

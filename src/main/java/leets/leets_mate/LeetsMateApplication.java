@@ -23,11 +23,7 @@ public class LeetsMateApplication {
 
     // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
     public List<String> parseMembers(String members) {
-        List<String> memberList = new ArrayList<>();
-        for (String s : members.split(",")) {
-            memberList.add(s);
-        }
-        return memberList;
+        return Arrays.asList(members.split(","));
     }
 
     // 총 멤버수를 반환합니다.

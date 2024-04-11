@@ -44,4 +44,11 @@ class LeetsMateApplicationTests {
             app.checkHasNoEnglish("welcome,to,leets");
         });
     }
+
+    @Test
+    void 다시_추천받을때_n또는_y를_입력한다() {
+        assertThrows(Exception.class, () -> {
+            app.reGeneration("no");
+        });
+    }
 }

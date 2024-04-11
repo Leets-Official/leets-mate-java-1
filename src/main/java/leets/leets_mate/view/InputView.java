@@ -34,6 +34,7 @@ public class InputView {
 
     public static int readMaxGroup(String[] members) {
         OutputView.printMaxGroup();
+        System.out.println();
         try {
             int memberCount = members.length;
             int maximumGroupSize = kb.nextInt();

@@ -1,6 +1,20 @@
 package leets.leets_mate.view;
 
-public class InputVIew {
+import java.util.Scanner;
+
+public class InputView {
+    private static final Scanner kb = new Scanner(System.in);
+
+    private InputView() {
+    }
+
+    public static InputView create() {
+        return new InputView();
+    }
+
+    public String readMember() {
+        return "";
+    }
 
     // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력
     public void checkHasNoEnglish(String members) {

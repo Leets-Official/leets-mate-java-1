@@ -1,41 +1,154 @@
 package leets.leets_mate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static leets.leets_mate.Constants.*;
 
 public class LeetsMateApplication {
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private List<String> parsedMembers;
+    private int groupSize;
 
-    // 동작 함수입니다.
-    public void run() {
+    public void run() throws IOException {
+        printIntro();
+        parsedMembers = parseMembers(readInput());
+        try {
+            checkContainsOnlyKorean(parsedMembers);
+        } catch (IllegalArgumentException e) {
+            System.out.println(ERROR_MEMBER_INPUT.getMessage());
+            run();
+            return;
+        }
+
+
+        groupSize = getGroupSize();
+
+        try {
+            getResult();
+        } catch (IllegalArgumentException e) {
+            System.out.println(ERROR_INPUT.getMessage());
+            getResult();
+        }
+        System.out.println(HELLO.getMessage());
     }
 
-    // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
+    private void getResult() throws IOException {
+        System.out.print(NEWLINE.getMessage());
+        System.out.println(RESULT.getMessage());
+
+        List<List<String>> finalMembers = generateRandomGroups(parsedMembers, groupSize);
+
+        printResult(finalMembers);
+        System.out.print(CONTINUE.getMessage());
+        String input = br.readLine();
+
+        if (input.equals("y")) {
+            System.out.println("--------------------------------");
+            getResult();
+        } else if (!input.equals("n")) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void printIntro() {
+        System.out.println(INTRO.getMessage());
+        System.out.print(NEWLINE.getMessage());
+        System.out.println(INPUT.getMessage());
+    }
+
+    private String readInput() throws IOException {
+        return br.readLine();
+    }
+
+    private int getGroupSize() throws IOException {
+        System.out.print(NEWLINE.getMessage());
+        System.out.println(MATE.getMessage());
+
+        int size = checkGroupSize(); // Must be even
+
+        try {
+            checkDataValidity(memberNumber(parsedMembers), size);
+        } catch (IllegalArgumentException e) {
+            System.out.println(ERROR_MAXSIZE.getMessage());
+            size = getGroupSize();
+        }
+        return size;
+    }
+
+    private int checkGroupSize() throws IOException {
+        int size = 0;
+
+        try {
+            size = Integer.parseInt(br.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println(ERROR_INPUT.getMessage());
+            checkGroupSize();
+        }
+
+        return size;
+    }
+
     public List<String> parseMembers(String members) {
-        return new ArrayList<>();
+        return Arrays.stream(members.split(",")).collect(Collectors.toList());
     }
 
-    // 총 멤버수를 반환합니다.
     public int memberNumber(List<String> members) {
-        return 0;
+        return members.size();
     }
 
-    // 멤버 문자열에 영어가 있는지 검사합니다. 영어가 있다면 예외 출력
-    public void checkHasNoEnglish(String members) {
+    public void checkContainsOnlyKorean(List<String> members) {
+        String regex = "^[ㄱ-ㅎ|가-힣]*$";
+        Pattern pattern = Pattern.compile(regex);
+
+        for (String member : members) {
+            Matcher matcher = pattern.matcher(member);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
-    // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
     public void checkDataValidity(int memberCount, int maximumGroupSize) {
+        if (memberCount < maximumGroupSize) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    // 랜덤 짝꿍 추첨하는 함수 입니다.
     public List<List<String>> generateRandomGroups(List<String> memberList, int maximumGroupSize) {
-        return new ArrayList<>();
+        Collections.shuffle(memberList);
+
+        List<List<String>> groups = new ArrayList<>();
+        for (int i = 0; i < memberList.size(); i += maximumGroupSize) {
+            int end = Math.min(i + maximumGroupSize, memberList.size());
+            groups.add(new ArrayList<>(memberList.subList(i, end)));
+        }
+
+        return groups;
     }
 
-    // 결과를 프린트 하는 함수입니다.
     public void printResult(List<List<String>> result) {
+        StringBuilder sb = new StringBuilder();
+
+        for (List<String> group : result) {
+            sb.append("[ ");
+            for (int i = 0; i < group.size(); i++) {
+                sb.append(group.get(i));
+                if (i != group.size() - 1) {
+                    sb.append(" | ");
+                }
+            }
+            sb.append(" ]").append("\n");
+        }
+        System.out.println(sb);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         LeetsMateApplication app = new LeetsMateApplication();
         app.run();
     }

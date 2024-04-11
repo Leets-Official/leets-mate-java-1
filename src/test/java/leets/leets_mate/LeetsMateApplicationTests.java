@@ -41,7 +41,7 @@ class LeetsMateApplicationTests {
     @Test
     void 멤버_문자열에_영어를_입력한_경우_예외를_반환한다() {
         assertThrows(Exception.class, () -> {
-            app.checkHasNoEnglish("welcome,to,leets");
+            app.checkHasNoEnglish(Arrays.asList("노정완", "shwjddhks", "이근표", "김예찬"));
         });
     }
 }

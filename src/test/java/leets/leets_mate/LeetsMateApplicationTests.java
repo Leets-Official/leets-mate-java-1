@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,15 +34,25 @@ class LeetsMateApplicationTests {
 
     @Test
     void 멤버수와_최대_멤버수를_잘못_입력한_경우_예외를_반환한다() {
-        assertThrows(Exception.class, () -> {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             app.checkDataValidity(3, 4);
         });
+        assertThat("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다.").isEqualTo(e.getMessage());
     }
 
     @Test
     void 멤버_문자열에_영어를_입력한_경우_예외를_반환한다() {
-        assertThrows(Exception.class, () -> {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             app.checkHasNoEnglish("welcome,to,leets");
         });
+        assertThat("[ERROR] 이름은 한글로 입력해야 합니다.").isEqualTo(e.getMessage());
+    }
+
+    @Test
+    void 다시추첨에서_잘못_입력한_경우_예외를_반환한다(){
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
+            app.checkYesOrNo("a");
+        });
+        assertThat("[ERROR] 입력에는 'y','n'만 가능합니다.").isEqualTo(e.getMessage());
     }
 }

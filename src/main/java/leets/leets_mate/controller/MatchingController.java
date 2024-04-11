@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class MatchingController {
 
     public void run() {
-        OutputView.printStartMessage();
-        InputView.readMember();
+        String[] arr = InputView.readMember();
+        int number = InputView.readMaxGroup(arr);
     }
 }

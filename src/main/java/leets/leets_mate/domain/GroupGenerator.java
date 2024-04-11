@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupGenerator {
-
     public List<List<String>> generateRandomGroups(Members members, MaxGroupSize maxGroupSize) {
         members.shuffleMembers();
         List<List<String>> matchedGroups = new ArrayList<>();
@@ -13,4 +12,4 @@ public class GroupGenerator {
         }
         return matchedGroups;
     }
-}
+}ㄴ

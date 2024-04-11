@@ -1,7 +1,6 @@
 package leets.leets_mate.domain;
 
 public class MaxGroupSize {
-
     int maxGroupSize;
     public MaxGroupSize(int maxGroupSize) {
         this.maxGroupSize = maxGroupSize;

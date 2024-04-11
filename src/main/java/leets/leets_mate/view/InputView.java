@@ -41,7 +41,7 @@ public class InputView {
 
             checkDataValidity(memberCount, maximumGroupSize);
 
-            return memberCount;
+            return maximumGroupSize;
         } catch (InputMismatchException e) {
             System.out.println(IllegalArgumentExceptionType.INVALID_MAX_GROUP.getMessage());
             kb.nextLine();

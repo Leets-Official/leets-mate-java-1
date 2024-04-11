@@ -1,7 +1,6 @@
 package leets.leets_mate.view;
 
 import leets.leets_mate.domain.Member;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +17,6 @@ public class OutputView {
         System.out.println("최대 짝 수를 입력해 주세요.");
     }
 
-    // 결과를 프린트 하는 함수입니다.
     public static void printResult(List<List<Member>> result) {
         System.out.println("오늘의 짝 추천 결과입니다.");
         for (List<Member> group : result) {
@@ -38,7 +36,11 @@ public class OutputView {
     }
 
     public static void printCanYouRetry() {
-        System.out.println("다시 구성하시겠습니까? (y or n): ");
+        System.out.print("다시 구성하시겠습니까? (y or n): ");
+    }
+
+    public static void printLine() {
+        System.out.println("--------------------------------");
     }
 
     public static void printDontWantRetry() {

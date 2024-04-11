@@ -17,16 +17,16 @@ public class LeetsMateApplication {
 
     public void run() throws IOException {
         printIntro();
-        String members = readInput();
+        parsedMembers = parseMembers(readInput());
         try {
-            checkHasNoEnglish(members);
+            checkContainsOnlyKorean(parsedMembers);
         } catch (IllegalArgumentException e) {
             System.out.println(ERROR_MEMBER_INPUT.getMessage());
             run();
             return;
         }
 
-        parsedMembers = parseMembers(members);
+
         groupSize = getGroupSize();
 
         try {
@@ -102,13 +102,15 @@ public class LeetsMateApplication {
         return members.size();
     }
 
-    public void checkHasNoEnglish(String members) {
+    public void checkContainsOnlyKorean(List<String> members) {
         String regex = "^[ㄱ-ㅎ|가-힣]*$";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(members);
 
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException();
+        for (String member : members) {
+            Matcher matcher = pattern.matcher(member);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException();
+            }
         }
     }
 

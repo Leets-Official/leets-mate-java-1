@@ -58,6 +58,9 @@ public class LeetsMateApplication {
 
     // 멤버수와 최대 짝수 데이터가 유효한지 검사하는 함수입니다. 유효하지 않다면 예외 출력
     public void checkDataValidity(int memberCount, int maximumGroupSize) {
+        if (maximumGroupSize <= 0) {
+            throw new IllegalArgumentException("[ERROR] 최대 짝 수는 0보다 커야 합니다");
+        }
         if (maximumGroupSize > memberCount) {
             throw new IllegalArgumentException("[ERROR] 최대 짝 수는 이름의 갯수보다 클 수 없습니다");
         }

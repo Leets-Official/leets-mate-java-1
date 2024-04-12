@@ -4,7 +4,9 @@ import java.util.*;
 
 public class LeetsMateApplication {
     Scanner scanner = new Scanner(System.in);
-
+    List<List<String>> result;
+    List<String> memberList = new ArrayList<>();
+    int maximumGroupSize;
     // 동작 함수입니다.
     public void run() {
         System.out.println("[Leets 오늘의 짝에게]를 시작합니다.");
@@ -19,7 +21,9 @@ public class LeetsMateApplication {
 
         List<List<String>> result = generateRandomGroups(memberList, maximumGroupSize);
         printResult(result);
-
+        reshuffle();
+    }
+    public void reshuffle() {
         while (true) {
             System.out.print("다시 구성하시겠습니까? (y or n): ");
             String s = scanner.nextLine();
@@ -38,11 +42,6 @@ public class LeetsMateApplication {
         }
 
 
-    }
-    // 문자열로된 멤버들을 리스트로 분리하는 함수입니다.
-    public List<String> parseMembers(String members) {
-        String[] memberArray = members.split(",");
-        return Arrays.asList(memberArray);
     }
 
     // 총 멤버수를 반환합니다.

@@ -17,12 +17,6 @@ class LeetsMateApplicationTests {
         app = new LeetsMateApplication();
     }
 
-    @Test
-    void 입력받은_문자열을_파싱하여_리스트로_만든다() {
-        String members = "리츠에,오신,걸,환영합니다";
-        List<String> actual = app.parseMembers(members);
-        assertThat(actual).containsExactly("리츠에", "오신", "걸", "환영합니다");
-    }
 
     @Test
     void 멤버수를_반환한다() {
@@ -43,5 +37,13 @@ class LeetsMateApplicationTests {
         assertThrows(Exception.class, () -> {
             app.checkHasNoEnglish("welcome,to,leets");
         });
+    }
+    void 다시_구성할_경우_올바른_결과를_반환한다() {
+        List<String> members = Arrays.asList("리츠에", "오신", "걸", "환영합니다");
+        app.memberList.addAll(members);
+        app.maximumGroupSize = 2;
+        app.result = app.generateRandomGroups(members, app.maximumGroupSize);
+        app.reshuffle();
+
     }
 }

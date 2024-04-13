@@ -18,7 +18,7 @@ class LeetsMateApplicationTests {
     }
 
     @Test
-    void 입력받은_문자열을_파싱하여_리스트로_만든다() {
+    void 입력받은_문자열을_파싱하여_리스트로_만든다() throws Exception {
         String members = "리츠에,오신,걸,환영합니다";
         List<String> actual = app.parseMembers(members);
         assertThat(actual).containsExactly("리츠에", "오신", "걸", "환영합니다");
@@ -39,9 +39,16 @@ class LeetsMateApplicationTests {
     }
 
     @Test
-    void 멤버_문자열에_영어를_입력한_경우_예외를_반환한다() {
+    void 멤버_문자열에_하글_이외를_입력한_경우_예외를_반환한다() {
         assertThrows(Exception.class, () -> {
-            app.checkHasNoEnglish("welcome,to,leets");
+            app.checkHasOnlyKorean("welcome,to,leets");
+        });
+    }
+
+    @Test
+    void 다시_추천_명령_에서_y나_n을_누르지_않은_경우_예외를_반환한다() {
+        assertThrows(Exception.class, () -> {
+            app.isDone("a");
         });
     }
 }
